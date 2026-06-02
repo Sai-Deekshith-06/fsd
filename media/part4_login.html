@@ -42,6 +42,7 @@
             margin-right: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-sizing: border-box;
         }
 
         .submit {
@@ -56,7 +57,16 @@
         }
 
         .submit:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit:active {
             background-color: #45a049;
+        }
+
+        /* <!-- Form Fade-In Animation  --> */
+        .container {
+            animation: fadeIn 1s ease-in-out;
         }
     </style>
 </head>
@@ -64,7 +74,7 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form action="/login" method="post">
+        <form action="#" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Password:</label>

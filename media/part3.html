@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            justify-content: center;
+        }
+
+        .loader {
+            border: 8px solid #f6f6f6;
+            border-top: 8px solid #0000008b;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .ball {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: #f66f6f;
+            animation: move 3s linear infinite reverse;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(200px);
+            }
+
+            25% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(200px);
+            }
+
+            75% {
+                transform: translateX(400px);
+            }
+
+            100% {
+                transform: translateX(200px);
+            }
+
+        }
+
+        .letters {
+            font-size: 30px;
+            animation: moveUpDown 2s ease-in-out infinite;
+        }
+
+        @keyframes moveUpDown {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .traffic {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50px;
+            height: 150px;
+            background-color: #333;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .traffic div {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 10px 0;
+            background-color: #555;
+        }
+
+        .traffic .red {
+            animation: traffic-light 6s linear infinite;
+            background-color: red;
+        }
+
+        .traffic .yellow {
+            background-color: yellow;
+            animation: traffic-light 6s linear infinite;
+            animation-delay: 2s;
+        }
+
+        .traffic .green {
+            background-color: green;
+            animation: traffic-light 6s linear infinite;
+            animation-delay: 4s;
+        }
+
+        @keyframes traffic-light {
+            0% {
+                opacity: 1;
+            }
+
+            33.33% {
+                opacity: 0;
+            }
+
+            66.66% {
+                opacity: 0;
+            }
+
+            99.99% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <hr>
+    <div class="loader"></div>
+    <hr>
+    <div class="ball"></div>
+    <hr>
+    <!-- Letters should move up and down repeatedly.  -->
+    <p class="letters">Welcome</p>
+    <hr>
+    <div class="traffic">
+        <div class="red"></div>
+        <div class="yellow"></div>
+        <div class="green"></div>
+    </div>
+
+</body>
+
+</html>
