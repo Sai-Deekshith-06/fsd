@@ -24,6 +24,13 @@
 - Collapse
 - Drop-down
 - Cards
+- Form ontrols
+- nav (simple)
+- nav-bar (responsive)
+- alert
+- d-<option> (display)
+    - d-flex
+- carousel
 
 ###
 
