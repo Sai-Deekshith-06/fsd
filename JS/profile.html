@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="hidden bg-primary text-white p-3 d-flex justify-content-between align-items-start">
+        <div class="container-fluid d-flex justify-content-start align-items-center">
+            <i class="bi bi-building me-3" style="font-size: 2rem;"></i>
+            <h1>Student Management Portal</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <div class="dropdown d-lg-none">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Menu
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="addstd.html">Add Student</a></li>
+                        <li><a class="dropdown-item" href="viewstd.html">View Student</a></li>
+                        <li><a class="dropdown-item" href="logout.html">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="d-none d-lg-block">
+                    <ul class="navbar-nav d-flex flex-row gap-3">
+                        <li class="nav-item active">
+                            <a class="nav-link text-nowrap" href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="addstd.html">Add Student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="viewstd.html">View Student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="logout.html">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card border-0 shadow rounded-4 overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-primary text-white text-center py-5">
+                        <div class="d-none mb-3">
+                            <i class="bi bi-person-circle display-1"></i>
+                        </div>
+                        <h2 class="fw-bold mb-0">
+                            <span id="name">Konda</span>
+                        </h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between border-bottom py-3">
+                                <strong>Roll Number</strong>
+                                <span id="rollno">A1</span>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom py-3">
+                                <strong>Branch</strong>
+                                <span id="branch">CSE</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-3">
+                                <strong>CGPA</strong>
+                                <span id="cgpa" class="badge bg-success fs-6">
+                                    8.5
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button class="btn btn-outline-secondary" onclick="window.location.href='viewstd.html'">
+                                <i class="bi bi-arrow-left"></i>
+                                Back
+                            </button>
+
+                            <button class="btn btn-primary flex-grow-1"
+                                onclick="window.location.href='editstd.html?rollno=' + document.getElementById('rollno').textContent">
+                                <i class="bi bi-pencil-square"></i>
+                                Edit Profile
+                            </button>
+
+                            <button class="btn btn-danger" onclick="handleDelete()">
+                                <i class="bi bi-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert("Please login first!");
+            window.location.href = "login.html";
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const rollNumber = urlParams.get('rollno');
+        const handleDelete = () => {
+            var students = JSON.parse(localStorage.getItem('students')) || [];
+            delete students[rollNumber];
+            localStorage.setItem('students', JSON.stringify(students));
+            alert("Student deleted successfully!");
+            window.location.href = "viewstd.html";
+        }
+        const onLoad = () => {
+            const name = document.getElementById("name");
+            const rollno = document.getElementById("rollno");
+            const branch = document.getElementById("branch");
+            const cgpa = document.getElementById("cgpa");
+            const students = JSON.parse(localStorage.getItem('students')) || {};
+            const student = students[rollNumber];
+            if (student) {
+                name.textContent = student.name;
+                rollno.textContent = rollNumber;
+                branch.textContent = student.branch;
+                cgpa.textContent = student.cgpa;
+            } else {
+                alert("Student not found!");
+                window.location.href = "viewstd.html";
+            }
+        }
+        window.onload = onLoad;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css.css">
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            window.location.href = "dashboard.html";
+        }
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            const uname = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rePassword = document.getElementById('re-password').value;
+            if (password !== rePassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+            var users = localStorage.getItem('users');
+            if (!users)
+                users = {};
+            else
+                users = JSON.parse(users);
+            users[uname] = { email, password };
+            users[email] = { uname, password };
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Registered successfully! Please login.");
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-start">
+        <div class="container-fluid d-flex justify-content-start align-items-center">
+            <i class="bi bi-building me-3" style="font-size: 2rem;"></i>
+            <h1>Student Management Portal</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <div class="dropdown d-lg-none">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Menu
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="login.html">Login</a></li>
+                        <li><a class="dropdown-item" href="register.html">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="d-none d-lg-block">
+                    <ul class="navbar-nav d-flex flex-row gap-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap active" href="register.html">Sign Up</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card border-0 shadow rounded-4 overflow-hidden">
+                    <div class="bg-primary text-white text-center py-5">
+                        <i class="bi bi-person-plus-fill display-3 mb-3"></i>
+                        <h2 class="fw-bold mb-0">
+                            Create Account
+                        </h2>
+                        <p class="mb-0 opacity-75">
+                            Register to continue
+                        </p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="dashboard.html" onsubmit="handleSubmit(event)">
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-semibold">
+                                    Username
+                                </label>
+                                <input type="text" id="username" name="username" class="form-control form-control-lg"
+                                    placeholder="Enter username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-semibold">
+                                    Email
+                                </label>
+                                <input type="email" id="email" name="email" class="form-control form-control-lg"
+                                    placeholder="Enter email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-semibold">
+                                    Password
+                                </label>
+                                <input type="password" id="password" name="password"
+                                    class="form-control form-control-lg" placeholder="Enter password" minlength="6"
+                                    required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="re-password" class="form-label fw-semibold">
+                                    Re-type Password
+                                </label>
+                                <input type="password" id="re-password" name="re-password"
+                                    class="form-control form-control-lg" placeholder="Re-enter password" minlength="6"
+                                    required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                <i class="bi bi-person-check-fill"></i>
+                                Register
+                            </button>
+                        </form>
+                        <p class="text-center mt-4 mb-0 text-muted">
+                            Already have an account?
+                            <a href="login.html" class="text-decoration-none fw-semibold">
+                                Login
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css.css">
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert("Please login first!");
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-start">
+        <div class="container-fluid d-flex justify-content-start align-items-center">
+            <i class="bi bi-building me-3" style="font-size: 2rem;"></i>
+            <h1>Student Management Portal</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <div class="dropdown d-lg-none">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Menu
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="addstd.html">Add Student</a></li>
+                        <li><a class="dropdown-item" href="viewstd.html">View Student</a></li>
+                        <li><a class="dropdown-item" href="logout.html">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="d-none d-lg-block">
+                    <ul class="navbar-nav d-flex flex-row gap-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap active" href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="addstd.html">Add Student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="viewstd.html">View Student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="logout.html">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card border-0 shadow rounded-4 overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-primary text-white text-center py-5">
+                        <i class="d-none bi bi-pencil-square display-3 mb-3"></i>
+                        <h2 class="fw-bold mb-0">
+                            Update student details
+                        </h2>
+                        <p class="d-none mb-0 opacity-75">
+                            Edit Student Profile
+                        </p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form onsubmit="handleUpdate(event)">
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-semibold">
+                                    Name
+                                </label>
+                                <input type="text" id="name" name="name" value="nani"
+                                    class="form-control form-control-lg" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rollno" class="form-label fw-semibold">
+                                    Roll Number
+                                </label>
+                                <input type="text" id="rollno" name="rollno" value="6790"
+                                    class="form-control form-control-lg bg-light" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="branch" class="form-label fw-semibold">
+                                    Branch
+                                </label>
+                                <input type="text" id="branch" name="branch" value="CSD"
+                                    class="form-control form-control-lg" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="cgpa" class="form-label fw-semibold">
+                                    CGPA
+                                </label>
+                                <input type="number" step="0.01" id="cgpa" name="cgpa" value="7.9"
+                                    class="form-control form-control-lg" required>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="button" class="btn btn-outline-secondary"
+                                    onclick="window.location.href='viewstd.html'">
+                                    <i class="bi bi-arrow-left"></i>
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary flex-grow-1">
+                                    <i class="bi bi-check-circle"></i>
+                                    Update Profile
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const rollNumber = urlParams.get('rollno');
+        const name = document.getElementById("name");
+        const rollno = document.getElementById("rollno");
+        const branch = document.getElementById("branch");
+        const cgpa = document.getElementById("cgpa");
+        const onLoad = () => {
+            const students = JSON.parse(localStorage.getItem('students')) || {};
+            const student = students[rollNumber];
+            if (student) {
+                name.value = student.name;
+                rollno.value = rollNumber;
+                branch.value = student.branch;
+                cgpa.value = student.cgpa;
+            } else {
+                alert("Student not found!");
+                window.location.href = "viewstd.html";
+            }
+        }
+        window.onload = onLoad;
+        const handleUpdate = (e) => {
+            e.preventDefault();
+            const students = JSON.parse(localStorage.getItem('students')) || {};
+            students[rollNumber] = {
+                name: name.value,
+                branch: branch.value,
+                cgpa: cgpa.value
+            }
+            localStorage.setItem('students', JSON.stringify(students));
+            window.location.href = `profile.html?rollno=${rollNumber}`;
+        }
+    </script>
+</body>
+
+</html>
